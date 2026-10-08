@@ -105,6 +105,8 @@ Requisitos funcionais (RF01–RF15), não funcionais (RNF01–RNF06), regras de 
 | **Missão 1** – O problema antes da solução | Situação-problema, público-alvo, stakeholders, escopo inicial e fluxo proposto | [Markdown](docs/missao-1-o-problema-antes-da-solucao.md) · [PDF](docs/pdf/missao-1-o-problema-antes-da-solucao.pdf) |
 | **Missão 2** – Das necessidades aos requisitos | Necessidades, RF, RNF, regras de negócio, fronteira do sistema, casos de uso e rastreabilidade | [Markdown](docs/missao-2-das-necessidades-aos-requisitos.md) · [PDF](docs/pdf/missao-2-das-necessidades-aos-requisitos.pdf) |
 | **Missão 3** – Raio-X estrutural do projeto | Princípios de projeto aplicados ao UC05: decomposição, módulos, coesão, acoplamento e diário de decisões | [Markdown](docs/missao-3-raio-x-estrutural.md) |
+| **Missão 4** – Mapa de responsabilidades e qualidade | Elementos candidatos e cartões CRC do UC05, riscos de coesão/acoplamento, RNFs que pressionam o projeto, teste da mudança e decisões D08–D11 | [Markdown](docs/missao-4-mapa-de-responsabilidades.md) |
+| **Apresentação** | Slides do projeto (10 slides, com notas do apresentador) | [PPTX](docs/apresentacao/ProTCC_Apresentacao.pptx) |
 
 ## Estrutura do repositório
 
@@ -115,6 +117,9 @@ engsoft2-tcc/
     ├── missao-1-o-problema-antes-da-solucao.md
     ├── missao-2-das-necessidades-aos-requisitos.md
     ├── missao-3-raio-x-estrutural.md
+    ├── missao-4-mapa-de-responsabilidades.md
+    ├── apresentacao/
+    │   └── ProTCC_Apresentacao.pptx
     └── pdf/
         ├── missao-1-o-problema-antes-da-solucao.pdf
         └── missao-2-das-necessidades-aos-requisitos.pdf

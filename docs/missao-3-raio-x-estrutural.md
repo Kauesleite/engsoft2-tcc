@@ -84,3 +84,5 @@ Trocar o canal de notificação ou a regra de aceite de versão não deve exigir
 ## Considerações finais
 
 Este é um mapa exploratório focado no UC05, não a arquitetura definitiva do ProTCC. Serve de ponto de partida para o diagrama de classes da Unidade 2 — a fronteira entre Regras de Submissão e Entregas ainda pode mudar.
+
+> **Atualização:** na [Missão 4](missao-4-mapa-de-responsabilidades.md), o módulo Regras de Submissão foi incorporado à própria Etapa (decisão D08, que revisa a D06).
