@@ -1,125 +1,130 @@
-# Sistema de Acompanhamento de TCC
+# ProTCC
 
-Sistema desenvolvido para acompanhar o desenvolvimento do **Trabalho de Conclusão de Curso (TCC)** dos alunos do curso de Bacharelado em Ciência da Computação da Universidade Federal do Amapá.
+**Sistema web responsivo para centralizar, gerenciar e acompanhar o desenvolvimento de Trabalhos de Conclusão de Curso (TCC).**
 
-## 1. Descrição do Sistema
+Projeto da disciplina **Engenharia de Software II** do curso de Bacharelado em Ciência da Computação da **Universidade Federal do Amapá (UNIFAP)** — Docente: Adeildo Telles da Silva.
 
-O sistema tem como objetivo acompanhar o desenvolvimento do Trabalho de Conclusão de Curso (TCC) dos alunos do Curso de Bacharelado em Ciência da Computação da Universidade Federal do Amapá.
+---
 
-## 2. Situação-Problema
+## Sumário
 
-Atualmente, o acompanhamento do desenvolvimento do TCC pode ocorrer de forma fragmentada, por meio de e-mails, aplicativos de mensagem, arquivos enviados separadamente e anotações individuais de alunos e professores.
+- [O problema](#o-problema)
+- [Proposta de valor por perfil](#proposta-de-valor-por-perfil)
+- [Principais funcionalidades](#principais-funcionalidades)
+- [Fluxo do sistema](#fluxo-do-sistema)
+- [Fora de escopo](#fora-de-escopo)
+- [Premissas técnicas](#premissas-técnicas)
+- [Casos de uso](#casos-de-uso)
+- [Documentação](#documentação)
+- [Estrutura do repositório](#estrutura-do-repositório)
+- [Equipe](#equipe)
 
-Essa falta de centralização dificulta a visualização do histórico do trabalho e o entendimento claro sobre o que já foi entregue, revisado ou aprovado.
+## O problema
 
-Para o orientador, esse cenário também dificulta o acompanhamento simultâneo de vários alunos, principalmente para identificar rapidamente:
+Hoje o acompanhamento do TCC acontece de forma fragmentada — e-mails, aplicativos de mensagem, arquivos soltos e anotações individuais. Com isso:
 
-- quais orientandos possuem entregas pendentes;
-- quais aguardam análise;
-- quais etapas já foram concluídas.
+- **alunos** não têm clareza sobre o que já foi entregue, revisado ou aprovado;
+- **orientadores** têm dificuldade para acompanhar vários orientandos e saber quais entregas aguardam sua análise;
+- **a coordenação** não tem uma visão geral e atualizada para identificar atrasos, pendências ou baixa evolução.
 
-A coordenação do curso, por sua vez, pode ter dificuldade para obter uma visão geral e atualizada do andamento dos TCCs, tornando mais trabalhoso identificar alunos com atrasos, pendências ou pouca evolução no processo de desenvolvimento do trabalho.
+O ProTCC unifica essa comunicação em torno das entregas, de forma clara e estruturada.
 
-## 3. Público-Alvo
+## Proposta de valor por perfil
 
-O público-alvo é formado por:
+| Perfil | O que o ProTCC oferece |
+|---|---|
+| **Alunos** (individual ou dupla) | Cadastram o pré-projeto, convidam parceiro de dupla e orientador, submetem entregas sem ordem fixa, enviam novas versões após correções e acompanham graficamente o progresso. |
+| **Professores orientadores** | Dashboard dos orientandos com entregas pendentes de avaliação; aprovam etapas ou solicitam alterações. |
+| **Coordenação do curso** | Visão analítica de todos os TCCs ativos para monitorar o andamento, identificar atrasos e mitigar gargalos. |
 
-- alunos em fase de desenvolvimento do TCC que já possuem orientador definido;
-- professores responsáveis pelas orientações.
+## Principais funcionalidades
 
-Esses usuários são diretamente afetados pela dificuldade de organizar e acompanhar entregas, revisões, correções e aprovações realizadas durante o desenvolvimento do trabalho.
+- **Gestão de vínculos** — convites e aceites digitais para formação de duplas e definição do orientador.
+- **Submissão flexível de etapas** — envio de entregas sem obrigatoriedade de ordem cronológica.
+- **Histórico e versionamento inviolável** — novas versões nunca apagam as anteriores; todo feedback fica registrado.
+- **Progresso automático** — barra de evolução calculada pela proporção de etapas aprovadas.
+- **Dashboards por perfil** — painéis focados nas prioridades de aluno, orientador e coordenação.
 
-## 4. Stakeholders
+## Fluxo do sistema
 
-Os principais stakeholders são os **alunos orientandos**, **professores-orientadores** e a **coordenação do curso**, pois possuem interesses e necessidades diretamente relacionados ao acompanhamento do desenvolvimento dos TCCs.
+```mermaid
+flowchart LR
+    A[Aluno cadastra pré-projeto] --> B{Em dupla?}
+    B -- Sim --> C[Convida colega] --> D[Colega aceita]
+    B -- Não --> E
+    D --> E[Convida orientador]
+    E --> F[Professor aceita orientação]
+    F --> G[Aluno submete etapa<br/>em qualquer ordem]
+    G --> H{Orientador avalia}
+    H -- Solicita alterações --> I[Nova versão<br/>histórico preservado] --> H
+    H -- Aprova --> J[Etapa concluída<br/>progresso atualizado]
+```
 
-### Alunos
+## Fora de escopo
 
-Precisam:
+Nesta versão o sistema **não** faz:
 
-- registrar suas entregas;
-- receber avaliações e orientações sobre possíveis correções;
-- acompanhar de forma clara o próprio progresso ao longo das etapas do TCC.
+- escolha, indicação ou vinculação automática de duplas ou orientadores;
+- edição ou escrita do texto do TCC dentro da plataforma;
+- chat ou comunicação fora do feedback atrelado às entregas;
+- agendamento ou gerenciamento de bancas e defesas, nem processos posteriores à defesa;
+- emissão de documentos acadêmicos ou oficiais;
+- integração com SIGAA, DERCA, biblioteca ou outros sistemas da UNIFAP.
 
-### Professores Orientadores
+## Premissas técnicas
 
-Precisam:
+| Aspecto | Premissa |
+|---|---|
+| **Desempenho** | Telas de consulta e dashboards carregam em até 3 s em 95% das requisições. |
+| **Usabilidade** | Interface responsiva, sem rolagem horizontal em smartphones e tablets. |
+| **Segurança** | Acesso somente autenticado, restrito ao perfil do usuário e aos TCCs dos quais participa. |
+| **Auditoria** | Toda ação crítica (submissão, avaliação, convite, aceite) registra quem, quando e o quê. |
+| **Integridade** | Nova submissão não substitui versões anteriores. |
 
-- acompanhar seus orientandos de forma organizada;
-- visualizar as entregas realizadas;
-- analisar e aprovar etapas;
-- solicitar correções;
-- identificar rapidamente trabalhos que aguardam avaliação.
+## Casos de uso
 
-### Coordenação do Curso
+| ID | Caso de uso | Ator principal |
+|---|---|---|
+| UC01 | Cadastrar pré-projeto | Aluno |
+| UC02 | Formar dupla | Aluno |
+| UC03 | Convidar orientador | Aluno |
+| UC04 | Responder convite de orientação | Professor |
+| UC05 | Submeter etapa do TCC | Aluno |
+| UC06 | Avaliar entrega | Professor-orientador |
+| UC07 | Consultar histórico de uma etapa | Aluno / Professor-orientador |
+| UC08 | Acompanhar progresso do TCC | Aluno |
+| UC09 | Acompanhar orientandos | Professor-orientador |
+| UC10 | Acompanhar TCCs do curso | Coordenação |
 
-Precisa:
+Requisitos funcionais (RF01–RF15), não funcionais (RNF01–RNF06), regras de negócio (RN01–RN13) e a rastreabilidade completa estão na [Missão 2](docs/missao-2-das-necessidades-aos-requisitos.md).
 
-- possuir uma visão geral do andamento dos TCCs;
-- acompanhar o progresso dos alunos;
-- identificar etapas concluídas;
-- identificar pendências e atrasos;
-- identificar situações que necessitem de acompanhamento.
+## Documentação
 
-## 5. Escopo Inicial
+| Entrega | Conteúdo | Arquivos |
+|---|---|---|
+| **Missão 1** – O problema antes da solução | Situação-problema, público-alvo, stakeholders, escopo inicial e fluxo proposto | [Markdown](docs/missao-1-o-problema-antes-da-solucao.md) · [PDF](docs/pdf/missao-1-o-problema-antes-da-solucao.pdf) |
+| **Missão 2** – Das necessidades aos requisitos | Necessidades, RF, RNF, regras de negócio, fronteira do sistema, casos de uso e rastreabilidade | [Markdown](docs/missao-2-das-necessidades-aos-requisitos.md) · [PDF](docs/pdf/missao-2-das-necessidades-aos-requisitos.pdf) |
+| **Missão 3** – Raio-X estrutural do projeto | Princípios de projeto aplicados ao UC05: decomposição, módulos, coesão, acoplamento e diário de decisões | [Markdown](docs/missao-3-raio-x-estrutural.md) |
 
-O projeto abrangerá o acompanhamento do desenvolvimento do TCC a partir do momento em que o aluno já possui um orientador definido.
+## Estrutura do repositório
 
-O acompanhamento será baseado no registro das entregas realizadas pelo aluno, na análise dessas entregas pelo orientador e na atualização do progresso conforme as etapas forem aprovadas.
+```
+engsoft2-tcc/
+├── README.md
+└── docs/
+    ├── missao-1-o-problema-antes-da-solucao.md
+    ├── missao-2-das-necessidades-aos-requisitos.md
+    ├── missao-3-raio-x-estrutural.md
+    └── pdf/
+        ├── missao-1-o-problema-antes-da-solucao.pdf
+        └── missao-2-das-necessidades-aos-requisitos.pdf
+```
 
-### Inclui
+## Equipe
 
-- Acesso ao sistema por alunos, professores orientadores e coordenação do curso;
-- Visualização das etapas previstas para o desenvolvimento do TCC;
-- Submissão, pelo aluno, das entregas referentes a cada etapa;
-- Registro de novas versões quando forem solicitadas correções;
-- Análise das entregas pelo professor orientador;
-- Aprovação da entrega ou solicitação de alterações pelo orientador;
-- Registro do histórico de submissões, avaliações e aprovações;
-- Atualização do progresso do TCC conforme as etapas forem aprovadas;
-- Visualização, pelo aluno, de suas etapas, pendências e progresso;
-- Dashboard do professor, contendo:
-  - visão geral de seus orientandos;
-  - progresso individual;
-  - etapa atual;
-  - entregas aguardando análise;
-- Dashboard da coordenação, contendo:
-  - visão geral dos alunos em TCC;
-  - respectivos orientadores;
-  - progresso;
-  - possíveis pendências.
-
-### Não Inclui
-
-- Escolha ou indicação de professor-orientador;
-- Processo de vinculação entre aluno e orientador;
-- Elaboração ou edição do conteúdo do TCC dentro do sistema;
-- Comunicação ou chat entre aluno e orientador fora das avaliações das entregas;
-- Agendamento ou gerenciamento de banca e defesa;
-- Processos posteriores à defesa do TCC;
-- Emissão de documentos acadêmicos ou oficiais;
-- Integração com SIGAA, DERCA, biblioteca ou outros sistemas e setores da UNIFAP.
-
-## 6. Fluxo Proposto
-
-O processo inicia com o **cadastro do pré-projeto pelo aluno**.
-
-Após o cadastro, o aluno convida um usuário professor cadastrado no sistema para ser seu orientador.
-
-O professor convidado recebe o pré-projeto e, ao aceitar a orientação, passa a acompanhar o desenvolvimento do TCC.
-
-A partir desse momento, o aluno pode submeter as diferentes etapas do projeto **de forma independente**, sem necessidade de seguir uma ordem específica.
-
-O fluxo de cada etapa ocorre da seguinte forma:
-
-1. O aluno realiza a submissão da etapa;
-2. O orientador recebe a entrega para análise;
-3. O orientador pode:
-   - aprovar a etapa; ou
-   - solicitar alterações;
-4. Caso sejam solicitadas alterações, o aluno pode enviar uma nova versão;
-5. Quando a etapa é aprovada, ela passa a ser considerada concluída;
-6. O progresso geral do TCC é atualizado;
-7. O histórico de submissões, avaliações e aprovações é mantido no sistema.
-
-Esse processo permite acompanhar a evolução do trabalho ao longo do tempo, mantendo registradas as diferentes versões e avaliações realizadas.
+- Gustavo Carvalho Ferreira
+- João Felype Palmerim Mendonça
+- João Lucas Farias de Sena
+- Kauê da Silva Leite
+- Lucas Mateus Vilhena Alves
+- Nicolas de Carvalho Lamarão Gomes
