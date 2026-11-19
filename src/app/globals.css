@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* Paleta inspirada no site institucional da UNIFAP: verde-escuro (#064214), grafite (#1c1c21),
+   cinza-azulado (#5a6b76) e gelo (#d7dce3); ouro como acento (cor do brasão). */
+@theme {
+  --color-verde-50: #f1f7f2;
+  --color-verde-100: #dcebdf;
+  --color-verde-200: #b6d6bc;
+  --color-verde-500: #1f8a3b;
+  --color-verde-700: #0b5a1f;
+  --color-verde-900: #064214;
+  --color-grafite-900: #1c1c21;
+  --color-grafite-800: #26262c;
+  --color-grafite-700: #3a3b42;
+  --color-aco: #5a6b76;
+  --color-gelo: #d7dce3;
+  --color-fundo: #f4f6f5;
+  --color-ouro-100: #fbf1d3;
+  --color-ouro-500: #d9a21b;
+  --color-ouro-700: #8a6408;
+  --color-alerta-100: #fde8e6;
+  --color-alerta-700: #a52a1f;
+  --color-azul-100: #e3ecf8;
+  --color-azul-700: #1f4e8c;
+  --font-sans: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-titulo: "Raleway", "Roboto", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--color-fundo);
+  color: #1f2328;
+  font-family: var(--font-sans);
+  overflow-wrap: break-word;
+}
+h1, h2, h3 { font-family: var(--font-titulo); letter-spacing: -0.01em; }
+
+/* Faixa de grafismo (padrão geométrico original, em referência aos grafismos usados pela UNIFAP) */
+.grafismo {
+  height: 14px;
+  background-color: var(--color-grafite-900);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='14' viewBox='0 0 42 14'%3E%3Cpath d='M0 7 L7 1 L14 7 L21 1 L28 7 L35 1 L42 7' fill='none' stroke='%235a6b76' stroke-width='1.5'/%3E%3Cpath d='M0 13 L7 7 L14 13 L21 7 L28 13 L35 7 L42 13' fill='none' stroke='%235a6b76' stroke-width='1.5'/%3E%3Crect x='19' y='5' width='4' height='4' transform='rotate(45 21 7)' fill='%23d9a21b'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+}
+.grafismo-claro {
+  height: 10px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='10' viewBox='0 0 30 10'%3E%3Cpath d='M0 5 L5 1 L10 5 L15 1 L20 5 L25 1 L30 5' fill='none' stroke='%23b6d6bc' stroke-width='1.3'/%3E%3Cpath d='M0 9 L5 5 L10 9 L15 5 L20 9 L25 5 L30 9' fill='none' stroke='%23b6d6bc' stroke-width='1.3'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+}
+.rotulo-mono {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+:focus-visible { outline: 3px solid var(--color-ouro-500); outline-offset: 2px; }

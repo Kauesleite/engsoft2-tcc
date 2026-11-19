@@ -15,6 +15,7 @@ Projeto da disciplina **Engenharia de Software II** do curso de Bacharelado em C
 - [Fora de escopo](#fora-de-escopo)
 - [Premissas técnicas](#premissas-técnicas)
 - [Casos de uso](#casos-de-uso)
+- [Executando o sistema](#executando-o-sistema)
 - [Documentação](#documentação)
 - [Estrutura do repositório](#estrutura-do-repositório)
 - [Equipe](#equipe)
@@ -98,6 +99,39 @@ Nesta versão o sistema **não** faz:
 
 Requisitos funcionais (RF01–RF15), não funcionais (RNF01–RNF06), regras de negócio (RN01–RN13) e a rastreabilidade completa estão na [Missão 2](docs/missao-2-das-necessidades-aos-requisitos.md).
 
+## Executando o sistema
+
+**Pilha:** Next.js 16 + TypeScript (front e back no mesmo projeto) · PostgreSQL · Tailwind CSS. Estilo: monólito modular em camadas ([ADR-02](docs/adr/ADR-02-monolito-modular-em-camadas.md)).
+
+```bash
+npm install
+npm run dev          # http://localhost:3000 (sem DATABASE_URL usa um Postgres embutido em .data/)
+npm test             # 30 testes automatizados (regras do modelo, imutabilidade, auditoria, acesso)
+```
+
+Na primeira execução o sistema cria o esquema e carrega **dados de demonstração** (desative com `DEMO_SEED=false`).
+Na tela de login há botões de entrada com um toque para cada perfil de exemplo (senha de todos: `protcc123`).
+
+| Variável | Para quê |
+|---|---|
+| `DATABASE_URL` | Postgres de produção (ex.: Neon). Sem ela, usa o Postgres embutido (só desenvolvimento) |
+| `SESSION_SECRET` | Segredo do cookie de sessão (opcional; se ausente é derivado da `DATABASE_URL`) |
+| `DEMO_SEED` | `false` desliga a carga automática de dados de exemplo |
+| `DEMO_LOGIN` | `false` esconde os botões de login de demonstração |
+
+**Deploy gratuito:** ver [docs/deploy.md](docs/deploy.md) (Vercel + Neon).
+
+### Da modelagem ao código
+
+| Elemento (Missão 4) | Arquivo |
+|---|---|
+| TCC, Etapa, Entrega | `src/domain/tcc.ts`, `src/domain/etapa.ts` |
+| RepositorioTCC (só inclusão) | `src/domain/repositorio.ts`, `src/infra/repositorio-postgres.ts` |
+| ServicoSubmissao (UC05) / avaliação (UC06) | `src/services/submissao.ts`, `src/services/avaliacao.ts` |
+| ServicoNotificacao (por evento, D07) | `src/services/notificacao.ts`, `src/domain/eventos.ts` |
+| Integridade do histórico (RNF06, D09) | `src/infra/schema.ts` (triggers) |
+| Auditoria (RNF05) | `src/services/auditoria.ts` |
+
 ## Documentação
 
 | Entrega | Conteúdo | Arquivos |
@@ -106,23 +140,23 @@ Requisitos funcionais (RF01–RF15), não funcionais (RNF01–RNF06), regras de 
 | **Missão 2** – Das necessidades aos requisitos | Necessidades, RF, RNF, regras de negócio, fronteira do sistema, casos de uso e rastreabilidade | [Markdown](docs/missao-2-das-necessidades-aos-requisitos.md) · [PDF](docs/pdf/missao-2-das-necessidades-aos-requisitos.pdf) |
 | **Missão 3** – Raio-X estrutural do projeto | Princípios de projeto aplicados ao UC05: decomposição, módulos, coesão, acoplamento e diário de decisões | [Markdown](docs/missao-3-raio-x-estrutural.md) |
 | **Missão 4** – Mapa de responsabilidades e qualidade | Elementos candidatos e cartões CRC do UC05, riscos de coesão/acoplamento, RNFs que pressionam o projeto, teste da mudança e decisões D08–D11 | [Markdown](docs/missao-4-mapa-de-responsabilidades.md) |
+| **Roteiro de apresentação e validação** | Passo a passo para demonstrar as telas e validar RF/RN/RNF, com contas de exemplo | [Markdown](docs/roteiro-apresentacao-e-validacao.md) |
+| **ADRs** | ADR-01 (entregas imutáveis) e ADR-02 (monólito modular) | [docs/adr](docs/adr) |
 | **Apresentação** | Slides do projeto (10 slides, com notas do apresentador) | [PPTX](docs/apresentacao/ProTCC_Apresentacao.pptx) |
 
 ## Estrutura do repositório
 
 ```
 engsoft2-tcc/
-├── README.md
-└── docs/
-    ├── missao-1-o-problema-antes-da-solucao.md
-    ├── missao-2-das-necessidades-aos-requisitos.md
-    ├── missao-3-raio-x-estrutural.md
-    ├── missao-4-mapa-de-responsabilidades.md
-    ├── apresentacao/
-    │   └── ProTCC_Apresentacao.pptx
-    └── pdf/
-        ├── missao-1-o-problema-antes-da-solucao.pdf
-        └── missao-2-das-necessidades-aos-requisitos.pdf
+├── src/
+│   ├── domain/        # TCC, Etapa, Entrega, eventos (sem dependência de infraestrutura)
+│   ├── infra/         # banco (Postgres/PGlite), esquema, repositório, seed
+│   ├── services/      # submissão, avaliação, convites, consultas, notificação, auditoria
+│   ├── lib/           # sessão e formatação
+│   ├── components/    # componentes de interface
+│   └── app/           # telas (aluno, professor, coordenação, TCC/etapa, auditoria, modelagem)
+├── tests/             # testes automatizados (Vitest)
+└── docs/              # Missões 1–4, ADRs, roteiro, deploy, apresentação
 ```
 
 ## Equipe
